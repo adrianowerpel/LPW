@@ -51,22 +51,22 @@ class fishermanInsurance
         }
     }
 
-    //continuar daqui o fihsermanInsurance
-    public function atualizar($beneficiaries)
+    public function atualizar($fishermanInsurance)
     {
         global $pdo;
         try {
-            $statement = $pdo->prepare("SELECT id_beneficiaries, str_nis, str_name_person, str_cpf, int_rgp FROM tb_beneficiaries WHERE id_beneficiaries = :id");
-            $statement->bindValue(":id", $beneficiaries->getIdBeneficiaries());
+            $statement = $pdo->prepare("SELECT id_fisherman_insurance, str_month, str_year, dbl_value, tb_beneficiaries_id_beneficiaries, tb_city_id_city FROM tb_fisherman_insurance WHERE id_fisherman_insurance = :id");
+            $statement->bindValue(":id", $fishermanInsurance->getIdFichermanInsurance());
             if ($statement->execute()) {
                 $rs = $statement->fetch(PDO::FETCH_OBJ);
-                $beneficiaries->setIdBeneficiaries($rs->id_beneficiaries);
-                $beneficiaries->setStrNis($rs->str_nis);
-                $beneficiaries->setStrNamePerson($rs->str_name_person);
-                $beneficiaries->setStrCpf($rs->str_cpf);
-                $beneficiaries->setIntRgp($rs->int_rgp);
+                $fishermanInsurance->setIdFichermanInsurance($rs->id_fisherman_insurance);
+                $fishermanInsurance->setStrMonth($rs->str_month);
+                $fishermanInsurance->setStrYear($rs->str_year);
+                $fishermanInsurance->setDblValue($rs->dbl_value);
+                $fishermanInsurance->setTbBeneficiariesIdBeneficiaries($rs->tb_beneficiaries_id_beneficiaries);
+                $fishermanInsurance->setTbCityIdCity($rs->tb_city_id_city);
 
-                return $beneficiaries;
+                return $fishermanInsurance;
             } else {
                 throw new PDOException("<script> alert('Não foi possível executar a declaração SQL !'); </script>");
             }
@@ -95,13 +95,13 @@ class fishermanInsurance
         $linha_inicial = ($pagina_atual - 1) * QTDE_REGISTROS;
 
         /* Instrução de consulta para paginação com MySQL */
-        $sql = "SELECT id_beneficiaries, str_nis, str_name_person, str_cpf, int_rgp FROM tb_beneficiaries LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
+        $sql = "SELECT id_fisherman_insurance, str_month, str_year, dbl_value, tb_beneficiaries_id_beneficiaries, tb_city_id_city FROM tb_fisherman_insurance LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
         $statement = $pdo->prepare($sql);
         $statement->execute();
         $dados = $statement->fetchAll(PDO::FETCH_OBJ);
 
         /* Conta quantos registos existem na tabela */
-        $sqlContador = "SELECT COUNT(*) AS total_registros FROM tb_beneficiaries";
+        $sqlContador = "SELECT COUNT(*) AS total_registros FROM tb_fisherman_insurance";
         $statement = $pdo->prepare($sqlContador);
         $statement->execute();
         $valor = $statement->fetch(PDO::FETCH_OBJ);
@@ -136,23 +136,25 @@ class fishermanInsurance
      <thead>
        <tr style='text-transform: uppercase;' class='active'>
         <th style='text-align: center; font-weight: bolder;'>Code</th>
-        <th style='text-align: center; font-weight: bolder;'>Nis</th>
-        <th style='text-align: center; font-weight: bolder;'>Name</th>
-        <th style='text-align: center; font-weight: bolder;'>CPF</th>
-        <th style='text-align: center; font-weight: bolder;'>RGP</th>
+        <th style='text-align: center; font-weight: bolder;'>Month</th>
+        <th style='text-align: center; font-weight: bolder;'>Year</th>
+        <th style='text-align: center; font-weight: bolder;'>Value</th>
+        <th style='text-align: center; font-weight: bolder;'>Beneficiarie</th>
+        <th style='text-align: center; font-weight: bolder;'>City</th>
         <th style='text-align: center; font-weight: bolder;' colspan='2'>Actions</th>
        </tr>
      </thead>
      <tbody>";
-            foreach ($dados as $bene):
+            foreach ($dados as $fi):
                 echo "<tr>
-        <td style='text-align: center'>$bene->id_beneficiaries</td>
-        <td style='text-align: center'>$bene->str_nis</td>
-        <td style='text-align: center'>$bene->str_name_person</td>
-        <td style='text-align: center'>$bene->str_cpf</td>
-        <td style='text-align: center'>$bene->int_rgp</td>
-        <td style='text-align: center'><a href='?act=upd&id=$bene->id_beneficiaries' title='Alterar'><i class='ti-reload'></i></a></td>
-        <td style='text-align: center'><a href='?act=del&id=$bene->id_beneficiaries' title='Remover'><i class='ti-close'></i></a></td>
+        <td style='text-align: center'>$fi->id_ficherman_insurance</td>
+        <td style='text-align: center'>$fi->str_month</td>
+        <td style='text-align: center'>$fi->str_year</td>
+        <td style='text-align: center'>$fi->dbl_value</td>
+        <td style='text-align: center'>$fi->tb_beneficiaries_id_beneficiaries</td>
+        <td style='text-align: center'>$fi->tb_city_id_city</td>
+        <td style='text-align: center'><a href='?act=upd&id=$fi->id_ficherman_insurance' title='Alterar'><i class='ti-reload'></i></a></td>
+        <td style='text-align: center'><a href='?act=del&id=$fi->id_ficherman_insurance' title='Remover'><i class='ti-close'></i></a></td>
        </tr>";
             endforeach;
             echo "
