@@ -3,7 +3,7 @@
 require_once "db/connection.php";
 require_once "classes/fishermanInsurance.php";
 
-class fishermanInsurance
+class fishermanInsuranceDAO
 {
     public function remover($fishermanInsurance)
     {
