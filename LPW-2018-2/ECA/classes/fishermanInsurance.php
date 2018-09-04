@@ -1,16 +1,16 @@
 <?php
 class fishermanInsurance
 {
-    private $id_ficherman_insurance;
+    private $id_fisherman_insurance;
     private $str_month;
     private $str_year;
     private $dbl_value;
     private $tb_beneficiaries_id_beneficiaries;
     private $tb_city_id_city;
 
-    public function __construct($id_ficherman_insurance, $str_month, $str_year, $dbl_value, $tb_beneficiaries_id_beneficiaries, $tb_city_id_city)
+    public function __construct($id_fisherman_insurance, $str_month, $str_year, $dbl_value, $tb_beneficiaries_id_beneficiaries, $tb_city_id_city)
     {
-        $this->id_ficherman_insurance = $id_ficherman_insurance;
+        $this->id_fisherman_insurance = $id_fisherman_insurance;
         $this->str_month = $str_month;
         $this->str_year = $str_year;
         $this->dbl_value = $dbl_value;
@@ -18,14 +18,14 @@ class fishermanInsurance
         $this->tb_city_id_city = $tb_city_id_city;
     }
 
-    public function getIdFichermanInsurance()
+    public function getIdFishermanInsurance()
     {
-        return $this->id_ficherman_insurance;
+        return $this->id_fisherman_insurance;
     }
 
-    public function setIdFichermanInsurance($id_ficherman_insurance): void
+    public function setIdFishermanInsurance($id_fisherman_insurance): void
     {
-        $this->id_ficherman_insurance = $id_ficherman_insurance;
+        $this->id_fisherman_insurance = $id_fisherman_insurance;
     }
 
     public function getStrMonth()

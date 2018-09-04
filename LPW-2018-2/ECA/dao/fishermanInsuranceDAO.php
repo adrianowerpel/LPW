@@ -10,7 +10,7 @@ class fishermanInsuranceDAO
         global $pdo;
         try {
             $statement = $pdo->prepare("DELETE FROM tb_fisherman_insurance WHERE id_fisherman_insurance = :id");
-            $statement->bindValue(":id", $fishermanInsurance->getIdFichermanInsurance());
+            $statement->bindValue(":id", $fishermanInsurance->getIdFishermanInsurance());
             if ($statement->execute()) {
                 return "<script> alert('Registo foi excluído com êxito !'); </script>";
             } else {
@@ -25,11 +25,11 @@ class fishermanInsuranceDAO
     {
         global $pdo;
         try {
-            if ($fishermanInsurance->getIdFichermanInsurance() != "") {
+            if ($fishermanInsurance->getIdFishermanInsurance() != "") {
                 $statement = $pdo->prepare("UPDATE tb_fisherman_insurance SET str_month=:str_month, str_year=:str_year, dbl_value=:dbl_value, tb_beneficiaries_id_beneficiaries=:tb_beneficiaries_id_beneficiaries, tb_city_id_city=:tb_city_id_city WHERE id_fisherman_insurance = :id;");
-                $statement->bindValue(":id", $fishermanInsurance->getIdFichermanInsurance());
+                $statement->bindValue(":id", $fishermanInsurance->getIdFishermanInsurance());
             } else {
-                $statement = $pdo->prepare("INSERT INTO tb_beneficiaries (str_month, str_year,dbl_value,tb_beneficiaries_id_beneficiaries,tb_city_id_city ) VALUES (:str_month, :str_year,:dbl_value,:tb_beneficiaries_id_beneficiaries,:tb_city_id_city)");
+                $statement = $pdo->prepare("INSERT INTO tb_fisherman_insurance (str_month, str_year,dbl_value,tb_beneficiaries_id_beneficiaries,tb_city_id_city ) VALUES (:str_month, :str_year,:dbl_value,:tb_beneficiaries_id_beneficiaries,:tb_city_id_city)");
             }
             $statement->bindValue(":str_month", $fishermanInsurance->getStrMonth());
             $statement->bindValue(":str_year", $fishermanInsurance->getStrYear());
@@ -56,10 +56,10 @@ class fishermanInsuranceDAO
         global $pdo;
         try {
             $statement = $pdo->prepare("SELECT id_fisherman_insurance, str_month, str_year, dbl_value, tb_beneficiaries_id_beneficiaries, tb_city_id_city FROM tb_fisherman_insurance WHERE id_fisherman_insurance = :id");
-            $statement->bindValue(":id", $fishermanInsurance->getIdFichermanInsurance());
+            $statement->bindValue(":id", $fishermanInsurance->getIdFishermanInsurance());
             if ($statement->execute()) {
                 $rs = $statement->fetch(PDO::FETCH_OBJ);
-                $fishermanInsurance->setIdFichermanInsurance($rs->id_fisherman_insurance);
+                $fishermanInsurance->setIdFishermanInsurance($rs->id_fisherman_insurance);
                 $fishermanInsurance->setStrMonth($rs->str_month);
                 $fishermanInsurance->setStrYear($rs->str_year);
                 $fishermanInsurance->setDblValue($rs->dbl_value);
@@ -147,14 +147,14 @@ class fishermanInsuranceDAO
      <tbody>";
             foreach ($dados as $fi):
                 echo "<tr>
-        <td style='text-align: center'>$fi->id_ficherman_insurance</td>
+        <td style='text-align: center'>$fi->id_fisherman_insurance</td>
         <td style='text-align: center'>$fi->str_month</td>
         <td style='text-align: center'>$fi->str_year</td>
         <td style='text-align: center'>$fi->dbl_value</td>
         <td style='text-align: center'>$fi->tb_beneficiaries_id_beneficiaries</td>
         <td style='text-align: center'>$fi->tb_city_id_city</td>
-        <td style='text-align: center'><a href='?act=upd&id=$fi->id_ficherman_insurance' title='Alterar'><i class='ti-reload'></i></a></td>
-        <td style='text-align: center'><a href='?act=del&id=$fi->id_ficherman_insurance' title='Remover'><i class='ti-close'></i></a></td>
+        <td style='text-align: center'><a href='?act=upd&id=$fi->id_fisherman_insurance' title='Alterar'><i class='ti-reload'></i></a></td>
+        <td style='text-align: center'><a href='?act=del&id=$fi->id_fisherman_insurance' title='Remover'><i class='ti-close'></i></a></td>
        </tr>";
             endforeach;
             echo "

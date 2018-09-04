@@ -50,8 +50,8 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "upd" && $id != "") {
 if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $str_month != "" && $str_year!= "" &&
     $dbl_value!= "" && $tb_beneficiaries_id_beneficiaries!= "" && $tb_city_id_city!= "")
 {
-    $beneficiaries = new beneficiaries($id, $str_month, $str_year, $dbl_value, $tb_beneficiaries_id_beneficiaries,$tb_city_id_city);
-    $msg = $object->salvar($beneficiaries);
+    $fishermanInsurance = new fishermanInsurance($id, $str_month, $str_year, $dbl_value, $tb_beneficiaries_id_beneficiaries,$tb_city_id_city);
+    $msg = $object->salvar($fishermanInsurance);
     $id = null;
     $str_month = NULL;
     $str_year = NULL;
@@ -105,11 +105,30 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
                             echo (isset($dbl_value) && ($dbl_value != null || $dbl_value != "")) ? $dbl_value : '';
                             ?>"/>
                             <br/>
-                            <!--                            RGP:-->
-                            <!--                            <input class="form-control" type="text" maxlength="11" name="int_rgp" placeholder="Enter numbers only" value="--><?php
-                            //                            // Preenche o sigla no campo sigla com um valor "value"
-                            //                            echo (isset($int_rgp) && ($int_rgp != null || $int_rgp != "")) ? $int_rgp : '';
-                            //                            ?><!--"/>-->
+                            Beneficiarie:
+                            <input class="form-control" type="text" maxlength="1" name="tb_beneficiaries_id_beneficiaries" placeholder="Enter numbers only" value="<?php
+                            // Preenche o sigla no campo sigla com um valor "value"
+                            echo (isset($tb_beneficiaries_id_beneficiaries) && ($tb_beneficiaries_id_beneficiaries != null || $tb_beneficiaries_id_beneficiaries != "")) ? $tb_beneficiaries_id_beneficiaries : '';
+                            ?>"/>
+                            City:
+                            <select class="form-control" name="tb_city_id_city">
+                                <?php
+                                $query = "SELECT * FROM tb_city order by str_name_city;";
+                                $statement = $pdo->prepare($query);
+                                if ($statement->execute()) {
+                                    $result = $statement->fetchAll(PDO::FETCH_OBJ);
+                                    foreach ($result as $rs) {
+                                        if ($rs->id_city == $tb_city_id_city) {
+                                            echo "<option value='$rs->id_city' selected>$rs->str_name_city</option>";
+                                        } else {
+                                            echo "<option value='$rs->id_city'>$rs->str_name_city</option>";
+                                        }
+                                    }
+                                } else {
+                                    throw new PDOException("<script> alert('Não foi possível executar a declaração SQL !'); </script>");
+                                }
+                                ?>
+                            </select>
                             <br/>
                             <input class="btn btn-success" type="submit" value="REGISTER">
                             <hr>
