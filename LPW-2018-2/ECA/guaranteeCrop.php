@@ -2,11 +2,11 @@
 
 require_once "classes/template.php";
 
-require_once "dao/fishermanInsuranceDAO.php";
-require_once "classes/fishermanInsurance.php";
+require_once "dao/guaranteeCropDAO.php";
+require_once "classes/guaranteeCrop.php";
 
 
-$object = new fishermanInsuranceDAO();
+$object = new guaranteeCropDAO();
 
 
 
@@ -36,9 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "upd" && $id != "") {
 
-    $fishermanInsurance = new fishermanInsurance($id,'','','','','');
+    $guaranteeCrop = new guaranteeCrop($id,'','','','','');
 
-    $resultado = $object->atualizar($fishermanInsurance);
+    $resultado = $object->atualizar($guaranteeCrop);
     $str_month = $resultado->getStrMonth();
     $str_year = $resultado->getStrYear();
     $dbl_value = $resultado->getDblValue();
@@ -50,8 +50,8 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "upd" && $id != "") {
 if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $str_month != "" && $str_year!= "" &&
     $dbl_value!= "" && $tb_beneficiaries_id_beneficiaries!= "" && $tb_city_id_city!= "")
 {
-    $fishermanInsurance = new fishermanInsurance($id, $str_month, $str_year, $dbl_value, $tb_beneficiaries_id_beneficiaries,$tb_city_id_city);
-    $msg = $object->salvar($fishermanInsurance);
+    $guaranteeCrop = new guaranteeCrop($id, $str_month, $str_year, $dbl_value, $tb_beneficiaries_id_beneficiaries,$tb_city_id_city);
+    $msg = $object->salvar($guaranteeCrop);
     $id = null;
     $str_month = NULL;
     $str_year = NULL;
@@ -62,8 +62,8 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $str_month != "" &&
 }
 
 if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
-    $fishermanInsurance = new fishermanInsurance($id,'','','','','');
-    $msg = $object->remover($fishermanInsurance);
+    $guaranteeCrop = new guaranteeCrop($id,'','','','','');
+    $msg = $object->remover($guaranteeCrop);
     $id = null;
 }
 
@@ -75,8 +75,8 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
             <div class='col-md-12'>
                 <div class='card'>
                     <div class='header'>
-                        <h4 class='title'>Fisherman Insurance</h4>
-                        <p class='category'>List of Fisherman Insurance of the system</p>
+                        <h4 class='title'>Guarantee Crop</h4>
+                        <p class='category'>List of Guarantee Crop of the system</p>
 
                     </div>
                     <div class='content table-responsive'>

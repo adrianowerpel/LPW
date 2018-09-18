@@ -128,17 +128,29 @@ class Template
                         <i class=\"ti-user\"></i>
                         <p>Beneficiaries</p>
                     </a>
+                </li> 
+                <li>
+                    <a href='guaranteeCrop.php'>
+                        <i class=\"ti-user\"></i>
+                        <p>Guarantee Crop</p>
+                    </a>
+                </li>   
+                <li>
+                    <a href='familyBag.php'>
+                        <i class=\"ti-user\"></i>
+                        <p>Family Bag</p>
+                    </a>
+                </li>               
+                <li>
+                    <a href='files.php'>
+                        <i class=\"ti-files\"></i>
+                        <p>Files</p>
+                    </a>
                 </li>
                 <li>
                     <a href='fishermanInsurance.php'>
                         <i class=\"ti-user\"></i>
                         <p>Fisherman Insurance</p>
-                    </a>
-                </li>
-                <li>
-                    <a href='files.php'>
-                        <i class=\"ti-files\"></i>
-                        <p>Files</p>
                     </a>
                 </li>
                 <li>

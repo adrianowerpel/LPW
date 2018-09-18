@@ -95,7 +95,9 @@ class fishermanInsuranceDAO
         $linha_inicial = ($pagina_atual - 1) * QTDE_REGISTROS;
 
         /* Instrução de consulta para paginação com MySQL */
-        $sql = "SELECT id_fisherman_insurance, str_month, str_year, dbl_value, tb_beneficiaries_id_beneficiaries, tb_city_id_city FROM tb_fisherman_insurance LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
+        $sql = "SELECT f.id_fisherman_insurance, f.str_month, f.str_year, f.dbl_value, f.tb_beneficiaries_id_beneficiaries, f.tb_city_id_city, c.str_name_city, str_name_person
+                FROM tb_fisherman_insurance f,tb_city c, tb_beneficiaries b
+                WHERE f.tb_city_id_city = c.id_city and f.tb_beneficiaries_id_beneficiaries = b.id_beneficiaries LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
         $statement = $pdo->prepare($sql);
         $statement->execute();
         $dados = $statement->fetchAll(PDO::FETCH_OBJ);
@@ -151,8 +153,8 @@ class fishermanInsuranceDAO
         <td style='text-align: center'>$fi->str_month</td>
         <td style='text-align: center'>$fi->str_year</td>
         <td style='text-align: center'>$fi->dbl_value</td>
-        <td style='text-align: center'>$fi->tb_beneficiaries_id_beneficiaries</td>
-        <td style='text-align: center'>$fi->tb_city_id_city</td>
+        <td style='text-align: center'>$fi->str_name_person</td>
+        <td style='text-align: center'>$fi->str_name_city</td>
         <td style='text-align: center'><a href='?act=upd&id=$fi->id_fisherman_insurance' title='Alterar'><i class='ti-reload'></i></a></td>
         <td style='text-align: center'><a href='?act=del&id=$fi->id_fisherman_insurance' title='Remover'><i class='ti-close'></i></a></td>
        </tr>";

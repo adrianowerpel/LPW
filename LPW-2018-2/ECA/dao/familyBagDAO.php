@@ -1,15 +1,15 @@
 <?php
 
 require_once "db/connection.php";
-require_once "classes/guaranteeCrop.php";
+require_once "classes/familyBag.php";
 
-class guaranteeCropDAO
+class familyBagDAO
 {
-    public function remover($guaranteeCrop){
+    public function remover($familyBag){
         global $pdo;
         try {
-            $statement = $pdo->prepare("DELETE FROM tb_guarantee_crop WHERE id_guarantee_crop = :id");
-            $statement->bindValue(":id", $guaranteeCrop->getIdGuaranteeCrop());
+            $statement = $pdo->prepare("DELETE FROM tb_family_bag WHERE id_family_bag = :id");
+            $statement->bindValue(":id", $familyBag->getIdFamilyBag());
             if ($statement->execute()) {
                 return "<script> alert('Registo foi excluído com êxito !'); </script>";
             } else {
@@ -20,20 +20,28 @@ class guaranteeCropDAO
         }
     }
 
-    public function salvar($guaranteeCrop){
+    public function salvar($familyBag){
         global $pdo;
         try {
-            if ($guaranteeCrop->getIdGuaranteeCrop() != "") {
-                $statement = $pdo->prepare("UPDATE tb_guarantee_crop SET srt_month=:srt_month, str_year=:str_year, dbl_value=:dbl_value, tb_city_id_city=:tb_city_id_city, tb_beneficiaries_id_beneficiaries=:tb_beneficiaries_id_beneficiaries   WHERE id_guarantee_crop = :id;");
-                $statement->bindValue(":id", $guaranteeCrop->getIdGuaranteeCrop());
+            if ($familyBag->getIdGuaranteeCrop() != "") {
+                $statement = $pdo->prepare("UPDATE tb_family_bag SET str_mes_comp=:str_mes_comp, str_ano_comp=:str_ano_comp, str_mes_ref=:str_mes_ref,
+                                                    str_ano_ref=:str_ano_ref, dbl_data_saque=:dbl_data_saque, dbl_valor_saque=:dbl_valor_saque, tb_city_id_city=:tb_city_id_city,
+                                                     tb_beneficiaries_id_beneficiaries=:tb_beneficiaries_id_beneficiaries WHERE id_family_bag = :id;");
+                $statement->bindValue(":id", $familyBag->getIdGuaranteeCrop());
             } else {
-                $statement = $pdo->prepare("INSERT INTO tb_guarantee_crop (srt_month, str_year, dbl_value, tb_city_id_city, tb_beneficiaries_id_beneficiaries) VALUES (:srt_month, :str_year, :dbl_value, :tb_city_id_city, :tb_beneficiaries_id_beneficiaries)");
+                $statement = $pdo->prepare("INSERT INTO tb_family_bag (srt_mes_comp, str_ano_comp, srt_mes_ref, str_ano_ref, dbl_data_saque, dbl_valor_saque,
+                                                                  tb_city_id_city, tb_beneficiaries_id_beneficiaries)
+                                                    VALUES (:srt_mes_comp, :str_ano_comp, :srt_mes_ref, :str_ano_ref, :dbl_data_saque, :dbl_valor_saque,
+                                                                  :tb_city_id_city, :tb_beneficiaries_id_beneficiaries)");
             }
-            $statement->bindValue(":srt_month",$guaranteeCrop->getSrtMonth());
-            $statement->bindValue(":str_year",$guaranteeCrop->getSrtYear());
-            $statement->bindValue(":dbl_value",$guaranteeCrop->getDblValue());
-            $statement->bindValue(":tb_city_id_city",$guaranteeCrop->getTbCityIdCity());
-            $statement->bindValue(":tb_beneficiaries_id_beneficiaries",$guaranteeCrop->getTbBeneficiariesIdBeneficiaries());
+            $statement->bindValue(":srt_mes_comp",$familyBag->getStrMesComp());
+            $statement->bindValue(":str_ano_comp",$familyBag->getStrAnoComp());
+            $statement->bindValue(":srt_mes_ref",$familyBag->getStrMesRef());
+            $statement->bindValue(":str_ano_ref",$familyBag->getStrAnoRef());
+            $statement->bindValue(":dbl_data_saque",$familyBag->getDblDataSaque());
+            $statement->bindValue(":dbl_valor_saque",$familyBag->getDblValorSaque());
+            $statement->bindValue(":tb_city_id_city",$familyBag->getTbCityIdCity());
+            $statement->bindValue(":tb_beneficiaries_id_beneficiaries",$familyBag->getTbBeneficiariesIdBeneficiaries());
 
             if ($statement->execute()) {
                 if ($statement->rowCount() > 0) {
@@ -49,20 +57,25 @@ class guaranteeCropDAO
         }
     }
 
-    public function atualizar($guaranteeCrop){
+    public function atualizar($familyBag){
         global $pdo;
         try {
-            $statement = $pdo->prepare("SELECT id_guarantee_crop, srt_month, str_year, dbl_value, tb_beneficiaries_id_beneficiaries, tb_city_id_city FROM tb_guarantee_crop WHERE id_guarantee_crop = :id");
-            $statement->bindValue(":id", $guaranteeCrop->getIdCity());
+            $statement = $pdo->prepare("SELECT id_family_bag, srt_mes_comp, str_ano_comp, srt_mes_ref, str_ano_ref, dbl_data_saque, dbl_valor_saque,
+                                                  tb_city_id_city, tb_beneficiaries_id_beneficiaries
+                                                 FROM tb_family_bag WHERE id_family_bag = :id");
+            $statement->bindValue(":id", $familyBag->getIdCity());
             if ($statement->execute()) {
                 $rs = $statement->fetch(PDO::FETCH_OBJ);
-                $guaranteeCrop->setIdGuaranteeCrop($rs->id_guarantee_crop);
-                $guaranteeCrop->setSrtMonth($rs->srt_month);
-                $guaranteeCrop->setSrtYear($rs->str_year);
-                $guaranteeCrop->setDblValue($rs->dbl_value);
-                $guaranteeCrop->setTbBeneficiariesIdBeneficiaries($rs->tb_beneficiaries_id_beneficiaries);
-                $guaranteeCrop->setTbCityIdCity($rs->tb_city_id_city);
-                return $guaranteeCrop;
+                $familyBag->setIdFamilyBag($rs->id_family_bag);
+                $familyBag->getStrMesComp($rs->srt_mes_comp);
+                $familyBag->getStrAnoComp($rs->str_ano_comp);
+                $familyBag->getStrMesRef($rs->srt_mes_ref);
+                $familyBag->getStrAnoRef($rs->str_ano_ref);
+                $familyBag->getDblDataSaque($rs->dbl_data_saque);
+                $familyBag->getDblValorSaque($rs->dbl_valor_saque);
+                $familyBag->setTbBeneficiariesIdBeneficiaries($rs->tb_beneficiaries_id_beneficiaries);
+                $familyBag->setTbCityIdCity($rs->tb_city_id_city);
+                return $familyBag;
             } else {
                 throw new PDOException("<script> alert('Não foi possível executar a declaração SQL !'); </script>");
             }
@@ -90,15 +103,16 @@ class guaranteeCropDAO
         $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
 
         /* Instrução de consulta para paginação com MySQL */
-        $sql = "SELECT g.id_guarantee_crop, g.srt_month, g.str_year, g.dbl_value, g.tb_beneficiaries_id_beneficiaries, g.tb_city_id_city, c.str_name_city, str_name_person
-                FROM tb_guarantee_crop g,tb_city c, tb_beneficiaries b
-                WHERE g.tb_city_id_city = c.id_city and g.tb_beneficiaries_id_beneficiaries = b.id_beneficiaries LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
+        $sql = "SELECT SELECT f.id_family_bag, f.srt_mes_comp, f.str_ano_comp, f.srt_mes_ref, f.str_ano_ref, f.dbl_data_saque, f.dbl_valor_saque, 
+                              c.tb_city_id_city, b.tb_beneficiaries_id_beneficiaries
+                FROM tb_family_bag f,tb_city c, tb_beneficiaries b
+                WHERE f.tb_city_id_city = c.id_city and f.tb_beneficiaries_id_beneficiaries = b.id_beneficiaries LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
         $statement = $pdo->prepare($sql);
         $statement->execute();
         $dados = $statement->fetchAll(PDO::FETCH_OBJ);
 
         /* Conta quantos registos existem na tabela */
-        $sqlContador = "SELECT COUNT(*) AS total_registros FROM tb_guarantee_crop";
+        $sqlContador = "SELECT COUNT(*) AS total_registros FROM tb_family_bag";
         $statement = $pdo->prepare($sqlContador);
         $statement->execute();
         $valor = $statement->fetch(PDO::FETCH_OBJ);
@@ -133,25 +147,31 @@ class guaranteeCropDAO
      <thead>
        <tr style='text-transform: uppercase;' class='active'>
         <th style='text-align: center; font-weight: bolder;'>Code</th>
-        <th style='text-align: center; font-weight: bolder;'>Month</th>
-        <th style='text-align: center; font-weight: bolder;'>Year</th>
-        <th style='text-align: center; font-weight: bolder;'>Value</th>
+        <th style='text-align: center; font-weight: bolder;'>Month Competence</th>
+        <th style='text-align: center; font-weight: bolder;'>Year Competence</th>
+        <th style='text-align: center; font-weight: bolder;'>Month Reference</th>
+        <th style='text-align: center; font-weight: bolder;'>Year Reference</th>
+        <th style='text-align: center; font-weight: bolder;'>Draw Date</th>
+        <th style='text-align: center; font-weight: bolder;'>Draw Value</th>
         <th style='text-align: center; font-weight: bolder;'>Beneficiarie</th>
         <th style='text-align: center; font-weight: bolder;'>City</th>
         <th style='text-align: center; font-weight: bolder;' colspan='2'>Actions</th>
        </tr>
      </thead>
      <tbody>";
-            foreach ($dados as $guaranteeCrop):
+            foreach ($dados as $familyBag):
                 echo "<tr>
-        <td style='text-align: center'>$guaranteeCrop->id_guarantee_crop</td>
-        <td style='text-align: center'>$guaranteeCrop->srt_month</td>
-        <td style='text-align: center'>$guaranteeCrop->str_year</td>
-        <td style='text-align: center'>$guaranteeCrop->dbl_value</td>
-        <td style='text-align: center'>$guaranteeCrop->str_name_person</td>
-        <td style='text-align: center'>$guaranteeCrop->str_name_city</td>
-        <td style='text-align: center'><a href='?act=upd&id=$guaranteeCrop->id_guarantee_crop' title='Alterar'><i class='ti-reload'></i></a></td>
-        <td style='text-align: center'><a href='?act=del&id=$guaranteeCrop->id_guarantee_crop' title='Remover'><i class='ti-close'></i></a></td>
+        <td style='text-align: center'>$familyBag->id_family_bag</td>
+        <td style='text-align: center'>$familyBag->srt_mes_comp</td>
+        <td style='text-align: center'>$familyBag->str_ano_comp</td>
+        <td style='text-align: center'>$familyBag->srt_mes_ref</td>
+        <td style='text-align: center'>$familyBag->str_ano_ref</td>
+        <td style='text-align: center'>$familyBag->dbl_data_saque</td>
+        <td style='text-align: center'>$familyBag->dbl_valor_saque</td>
+        <td style='text-align: center'>$familyBag->str_name_person</td>
+        <td style='text-align: center'>$familyBag->str_name_city</td>
+        <td style='text-align: center'><a href='?act=upd&id=$familyBag->id_family_bag' title='Alterar'><i class='ti-reload'></i></a></td>
+        <td style='text-align: center'><a href='?act=del&id=$familyBag->id_family_bag' title='Remover'><i class='ti-close'></i></a></td>
        </tr>";
             endforeach;
             echo "
@@ -178,6 +198,4 @@ class guaranteeCropDAO
         endif;
 
     }
-
-
 }
