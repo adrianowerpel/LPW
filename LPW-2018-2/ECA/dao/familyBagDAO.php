@@ -23,20 +23,20 @@ class familyBagDAO
     public function salvar($familyBag){
         global $pdo;
         try {
-            if ($familyBag->getIdGuaranteeCrop() != "") {
+            if ($familyBag->getIdFamilyBag() != "") {
                 $statement = $pdo->prepare("UPDATE tb_family_bag SET str_mes_comp=:str_mes_comp, str_ano_comp=:str_ano_comp, str_mes_ref=:str_mes_ref,
                                                     str_ano_ref=:str_ano_ref, dbl_data_saque=:dbl_data_saque, dbl_valor_saque=:dbl_valor_saque, tb_city_id_city=:tb_city_id_city,
                                                      tb_beneficiaries_id_beneficiaries=:tb_beneficiaries_id_beneficiaries WHERE id_family_bag = :id;");
-                $statement->bindValue(":id", $familyBag->getIdGuaranteeCrop());
+                $statement->bindValue(":id", $familyBag->getIdFamilyBag());
             } else {
-                $statement = $pdo->prepare("INSERT INTO tb_family_bag (srt_mes_comp, str_ano_comp, srt_mes_ref, str_ano_ref, dbl_data_saque, dbl_valor_saque,
+                $statement = $pdo->prepare("INSERT INTO tb_family_bag (str_mes_comp, str_ano_comp, str_mes_ref, str_ano_ref, dbl_data_saque, dbl_valor_saque,
                                                                   tb_city_id_city, tb_beneficiaries_id_beneficiaries)
-                                                    VALUES (:srt_mes_comp, :str_ano_comp, :srt_mes_ref, :str_ano_ref, :dbl_data_saque, :dbl_valor_saque,
+                                                    VALUES (:str_mes_comp, :str_ano_comp, :str_mes_ref, :str_ano_ref, :dbl_data_saque, :dbl_valor_saque,
                                                                   :tb_city_id_city, :tb_beneficiaries_id_beneficiaries)");
             }
-            $statement->bindValue(":srt_mes_comp",$familyBag->getStrMesComp());
+            $statement->bindValue(":str_mes_comp",$familyBag->getStrMesComp());
             $statement->bindValue(":str_ano_comp",$familyBag->getStrAnoComp());
-            $statement->bindValue(":srt_mes_ref",$familyBag->getStrMesRef());
+            $statement->bindValue(":str_mes_ref",$familyBag->getStrMesRef());
             $statement->bindValue(":str_ano_ref",$familyBag->getStrAnoRef());
             $statement->bindValue(":dbl_data_saque",$familyBag->getDblDataSaque());
             $statement->bindValue(":dbl_valor_saque",$familyBag->getDblValorSaque());
@@ -60,19 +60,19 @@ class familyBagDAO
     public function atualizar($familyBag){
         global $pdo;
         try {
-            $statement = $pdo->prepare("SELECT id_family_bag, srt_mes_comp, str_ano_comp, srt_mes_ref, str_ano_ref, dbl_data_saque, dbl_valor_saque,
+            $statement = $pdo->prepare("SELECT id_family_bag, str_mes_comp, str_ano_comp, str_mes_ref, str_ano_ref, dbl_data_saque, dbl_valor_saque,
                                                   tb_city_id_city, tb_beneficiaries_id_beneficiaries
                                                  FROM tb_family_bag WHERE id_family_bag = :id");
-            $statement->bindValue(":id", $familyBag->getIdCity());
+            $statement->bindValue(":id", $familyBag->getIdFamilyBag());
             if ($statement->execute()) {
                 $rs = $statement->fetch(PDO::FETCH_OBJ);
                 $familyBag->setIdFamilyBag($rs->id_family_bag);
-                $familyBag->getStrMesComp($rs->srt_mes_comp);
-                $familyBag->getStrAnoComp($rs->str_ano_comp);
-                $familyBag->getStrMesRef($rs->srt_mes_ref);
-                $familyBag->getStrAnoRef($rs->str_ano_ref);
-                $familyBag->getDblDataSaque($rs->dbl_data_saque);
-                $familyBag->getDblValorSaque($rs->dbl_valor_saque);
+                $familyBag->setStrMesComp($rs->str_mes_comp);
+                $familyBag->setStrAnoComp($rs->str_ano_comp);
+                $familyBag->setStrMesRef($rs->str_mes_ref);
+                $familyBag->setStrAnoRef($rs->str_ano_ref);
+                $familyBag->setDblDataSaque($rs->dbl_data_saque);
+                $familyBag->setDblValorSaque($rs->dbl_valor_saque);
                 $familyBag->setTbBeneficiariesIdBeneficiaries($rs->tb_beneficiaries_id_beneficiaries);
                 $familyBag->setTbCityIdCity($rs->tb_city_id_city);
                 return $familyBag;
@@ -103,8 +103,8 @@ class familyBagDAO
         $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
 
         /* Instrução de consulta para paginação com MySQL */
-        $sql = "SELECT SELECT f.id_family_bag, f.srt_mes_comp, f.str_ano_comp, f.srt_mes_ref, f.str_ano_ref, f.dbl_data_saque, f.dbl_valor_saque, 
-                              c.tb_city_id_city, b.tb_beneficiaries_id_beneficiaries
+        $sql = "SELECT f.id_family_bag, f.str_mes_comp, f.str_ano_comp, f.str_mes_ref, f.str_ano_ref, f.dbl_data_saque, f.dbl_valor_saque, 
+                              c.str_name_city, b.str_name_person
                 FROM tb_family_bag f,tb_city c, tb_beneficiaries b
                 WHERE f.tb_city_id_city = c.id_city and f.tb_beneficiaries_id_beneficiaries = b.id_beneficiaries LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
         $statement = $pdo->prepare($sql);
@@ -162,9 +162,9 @@ class familyBagDAO
             foreach ($dados as $familyBag):
                 echo "<tr>
         <td style='text-align: center'>$familyBag->id_family_bag</td>
-        <td style='text-align: center'>$familyBag->srt_mes_comp</td>
+        <td style='text-align: center'>$familyBag->str_mes_comp</td>
         <td style='text-align: center'>$familyBag->str_ano_comp</td>
-        <td style='text-align: center'>$familyBag->srt_mes_ref</td>
+        <td style='text-align: center'>$familyBag->str_mes_ref</td>
         <td style='text-align: center'>$familyBag->str_ano_ref</td>
         <td style='text-align: center'>$familyBag->dbl_data_saque</td>
         <td style='text-align: center'>$familyBag->dbl_valor_saque</td>

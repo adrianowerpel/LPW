@@ -69,7 +69,14 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $str_mes_comp != ""
 
 }
 
+if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
+    $familyBag = new familyBag($id,'','','','','','','','');
+    $msg = $object->remover($familyBag);
+    $id = null;
+}
+
 ?>
+
 
     <div class='content' xmlns="http://www.w3.org/1999/html">
         <div class='container-fluid'>
@@ -77,8 +84,8 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $str_mes_comp != ""
                 <div class='col-md-12'>
                     <div class='card'>
                         <div class='header'>
-                            <h4 class='title'>Fisherman Insurance</h4>
-                            <p class='category'>List of Fisherman Insurance of the system</p>
+                            <h4 class='title'>Family Bag</h4>
+                            <p class='category'>List of Family Bag of the system</p>
 
                         </div>
                         <div class='content table-responsive'>
@@ -90,37 +97,37 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $str_mes_comp != ""
                                 echo (isset($id) && ($id != null || $id != "")) ? $id : '';
                                 ?>"/>
                                 Month Competence:
-                                <input class="form-control" type="number" maxlength="2" name="str_month" placeholder="MM" value="<?php
+                                <input class="form-control" type="number" maxlength="2" name="str_mes_comp" placeholder="MM" value="<?php
                                 // Preenche o nome no campo nome com um valor "value"
                                 echo (isset($str_mes_comp) && ($str_mes_comp != null || $str_mes_comp != "")) ? $str_mes_comp : '';
                                 ?>"/>
                                 <br/>
                                 Year Competence:
-                                <input class="form-control" type="number" maxlength="4" name="str_year" placeholder="YYYY" value="<?php
+                                <input class="form-control" type="number" maxlength="4" name="str_ano_comp" placeholder="YYYY" value="<?php
                                 // Preenche o sigla no campo sigla com um valor "value"
                                 echo (isset($str_ano_comp) && ($str_ano_comp != null || $str_ano_comp != "")) ? $str_ano_comp : '';
                                 ?>"/>
                                 <br/>
                                 Month Reference:
-                                <input class="form-control" type="number" maxlength="2" name="str_month" placeholder="MM" value="<?php
+                                <input class="form-control" type="number" maxlength="2" name="str_mes_ref" placeholder="MM" value="<?php
                                 // Preenche o nome no campo nome com um valor "value"
                                 echo (isset($str_mes_ref) && ($str_mes_ref != null || $str_mes_ref != "")) ? $str_mes_ref : '';
                                 ?>"/>
                                 <br/>
                                 Year Reference:
-                                <input class="form-control" type="number" maxlength="4" name="str_year" placeholder="YYYY" value="<?php
+                                <input class="form-control" type="number" maxlength="4" name="str_ano_ref" placeholder="YYYY" value="<?php
                                 // Preenche o sigla no campo sigla com um valor "value"
                                 echo (isset($str_ano_ref) && ($str_ano_ref != null || $str_ano_ref != "")) ? $str_ano_ref : '';
                                 ?>"/>
                                 <br/>
                                 Draw Date:
-                                <input class="form-control" type="text" name="dbl_value" value="<?php
+                                <input class="form-control" type="text" name="dbl_data_saque" value="<?php
                                 // Preenche o sigla no campo sigla com um valor "value"
                                 echo (isset($dbl_data_saque) && ($dbl_data_saque != null || $dbl_data_saque != "")) ? $dbl_data_saque : '';
                                 ?>"/>
                                 <br/>
                                 Draw Value:
-                                <input class="form-control" type="text" name="dbl_value" value="<?php
+                                <input class="form-control" type="text" name="dbl_valor_saque" value="<?php
                                 // Preenche o sigla no campo sigla com um valor "value"
                                 echo (isset($dbl_valor_saque) && ($dbl_valor_saque != null || $dbl_valor_saque != "")) ? $dbl_valor_saque : '';
                                 ?>"/>
