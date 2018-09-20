@@ -160,6 +160,12 @@ class Template
                     </a>
                 </li>
                 <li>
+                    <a href='pecl.php'>
+                        <i class=\"ti-user\"></i>
+                        <p>Program for The Erradication of Child Labor</p>
+                    </a>
+                </li>
+                <li>
                     <a href='subfunctions.php'>
                         <i class=\"ti-archive\"></i>
                         <p>Subfunction</p>
