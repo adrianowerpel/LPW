@@ -143,11 +143,12 @@ class guaranteeCropDAO
      </thead>
      <tbody>";
             foreach ($dados as $guaranteeCrop):
+                $money = 'R$' . number_format($guaranteeCrop->dbl_value, 2, ',', '.');
                 echo "<tr>
         <td style='text-align: center'>$guaranteeCrop->id_guarantee_crop</td>
         <td style='text-align: center'>$guaranteeCrop->srt_month</td>
         <td style='text-align: center'>$guaranteeCrop->str_year</td>
-        <td style='text-align: center'>$guaranteeCrop->dbl_value</td>
+        <td style='text-align: center'>$money</td>
         <td style='text-align: center'>$guaranteeCrop->str_name_person</td>
         <td style='text-align: center'>$guaranteeCrop->str_name_city</td>
         <td style='text-align: center'><a href='?act=upd&id=$guaranteeCrop->id_guarantee_crop' title='Alterar'><i class='ti-reload'></i></a></td>

@@ -148,11 +148,12 @@ class fishermanInsuranceDAO
      </thead>
      <tbody>";
             foreach ($dados as $fi):
+                $money = 'R$' . number_format($fi->dbl_value, 2, ',', '.');
                 echo "<tr>
         <td style='text-align: center'>$fi->id_fisherman_insurance</td>
         <td style='text-align: center'>$fi->str_month</td>
         <td style='text-align: center'>$fi->str_year</td>
-        <td style='text-align: center'>$fi->dbl_value</td>
+        <td style='text-align: center'>$money</td>
         <td style='text-align: center'>$fi->str_name_person</td>
         <td style='text-align: center'>$fi->str_name_city</td>
         <td style='text-align: center'><a href='?act=upd&id=$fi->id_fisherman_insurance' title='Alterar'><i class='ti-reload'></i></a></td>

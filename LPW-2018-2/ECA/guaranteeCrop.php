@@ -88,19 +88,19 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
                             echo (isset($id) && ($id != null || $id != "")) ? $id : '';
                             ?>"/>
                             Month:
-                            <input class="form-control" type="number" maxlength="2" name="str_month" placeholder="MM" value="<?php
+                            <input class="form-control" type="number" maxlength="2" min="1" max="12" name="str_month" placeholder="MM" value="<?php
                             // Preenche o nome no campo nome com um valor "value"
                             echo (isset($str_month) && ($str_month != null || $str_month != "")) ? $str_month : '';
                             ?>"/>
                             <br/>
                             Year:
-                            <input class="form-control" type="number" maxlength="4" name="str_year" placeholder="YYYY" value="<?php
+                            <input class="form-control" type="number" maxlength="4" min="1950" max="<?php echo date("Y")?>" name="str_year" placeholder="YYYY" value="<?php
                             // Preenche o sigla no campo sigla com um valor "value"
                             echo (isset($str_year) && ($str_year != null || $str_year != "")) ? $str_year : '';
                             ?>"/>
                             <br/>
                             Value:
-                            <input class="form-control" type="text" name="dbl_value" value="<?php
+                            <input class="form-control" type="number" name="dbl_value" value="<?php
                             // Preenche o sigla no campo sigla com um valor "value"
                             echo (isset($dbl_value) && ($dbl_value != null || $dbl_value != "")) ? $dbl_value : '';
                             ?>"/>

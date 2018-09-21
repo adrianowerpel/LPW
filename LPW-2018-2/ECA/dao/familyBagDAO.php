@@ -160,6 +160,7 @@ class familyBagDAO
      </thead>
      <tbody>";
             foreach ($dados as $familyBag):
+                $money = 'R$' . number_format($familyBag->dbl_valor_saque, 2, ',', '.');
                 echo "<tr>
         <td style='text-align: center'>$familyBag->id_family_bag</td>
         <td style='text-align: center'>$familyBag->str_mes_comp</td>
@@ -167,7 +168,7 @@ class familyBagDAO
         <td style='text-align: center'>$familyBag->str_mes_ref</td>
         <td style='text-align: center'>$familyBag->str_ano_ref</td>
         <td style='text-align: center'>$familyBag->dbl_data_saque</td>
-        <td style='text-align: center'>$familyBag->dbl_valor_saque</td>
+        <td style='text-align: center'>$money</td>
         <td style='text-align: center'>$familyBag->str_name_person</td>
         <td style='text-align: center'>$familyBag->str_name_city</td>
         <td style='text-align: center'><a href='?act=upd&id=$familyBag->id_family_bag' title='Alterar'><i class='ti-reload'></i></a></td>

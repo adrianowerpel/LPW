@@ -153,12 +153,13 @@ class peclDAO
      </thead>
      <tbody>";
             foreach ($dados as $pecl):
+                $money = 'R$' . number_format($pecl->dbl_value, 2, ',', '.');
                 echo "<tr>
         <td style='text-align: center'>$pecl->id_pecl</td>
         <td style='text-align: center'>$pecl->str_month</td>
         <td style='text-align: center'>$pecl->str_year</td>
         <td style='text-align: center'>$pecl->str_situation</td>
-        <td style='text-align: center'>$pecl->dbl_value</td>
+        <td style='text-align: center'>$money</td>
         <td style='text-align: center'>$pecl->str_name_person</td>
         <td style='text-align: center'>$pecl->str_name_city</td>
         <td style='text-align: center'><a href='?act=upd&id=$pecl->id_pecl' title='Alterar'><i class='ti-reload'></i></a></td>
